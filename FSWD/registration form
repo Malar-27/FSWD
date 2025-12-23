@@ -1,0 +1,88 @@
+1app.jsx:
+// src/App.js
+import React, { useState } from "react";
+import "./App.css";
+
+export default function App() {
+  const [foodName, setFoodName] = useState("");
+  const [foodType, setFoodType] = useState("");
+  const [ingredients, setIngredients] = useState([]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert("Food Registered Successfully!");
+  };
+
+  // Ingredient list
+  const ingredientOptions = [
+    "Rice",
+    "Noodles",
+    "Chicken",
+    "Egg",
+    "Vegetables",
+    "Masala",
+    "Oil",
+    "Paneer",
+    "Cheese"
+  ];
+
+  return (
+    <div className="main-bg">
+      <div className="form-card">
+        <h2>🍽️ Food Registration</h2>
+
+        <form onSubmit={handleSubmit}>
+
+          {/* Food Name Dropdown */}
+          <select
+            value={foodName}
+            onChange={(e) => setFoodName(e.target.value)}
+            required
+          >
+            <option value="">Choose Food Name</option>
+            <option value="Fried Rice">Fried Rice</option>
+            <option value="Biriyani">Biriyani</option>
+            <option value="Noodles">Noodles</option>
+            <option value="Pizza">Pizza</option>
+            <option value="Dosa">Dosa</option>
+          </select>
+
+          {/* Food Type Dropdown */}
+          <select
+            value={foodType}
+            onChange={(e) => setFoodType(e.target.value)}
+            required
+          >
+            <option value="">Food Type</option>
+            <option value="Veg">Veg</option>
+            <option value="Non-Veg">Non-Veg</option>
+          </select>
+
+          {/* Ingredients Multi-select Dropdown */}
+          <select
+            multiple
+            value={ingredients}
+            onChange={(e) =>
+              setIngredients(
+                Array.from(e.target.selectedOptions, (option) => option.value)
+              )
+            }
+            required
+          >
+            <option disabled>Choose Ingredients</option>
+            {ingredientOptions.map((item, idx) => (
+              <option key={idx} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+
+          <button type="submit" className="btn-submit">
+            Register
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
