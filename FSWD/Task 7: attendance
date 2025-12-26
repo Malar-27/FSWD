@@ -1,0 +1,69 @@
+main.jsx:
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+App.jsx:
+import { useState } from "react";
+
+function App() {
+  const [students, setStudents] = useState([
+    { id: 1, name: "Alice", present: true },
+    { id: 2, name: "Bob", present: true },
+    { id: 3, name: "Charlie", present: true },
+    { id: 4, name: "Daisy", present: false },
+    { id: 5, name: "Ethan", present: false }
+  ]);
+
+  const toggleAttendance = (id) => {
+    setStudents(
+      students.map((student) =>
+        student.id === id
+          ? { ...student, present: !student.present }
+          : student
+      )
+    );
+  };
+
+  return (
+    <div style={{ padding: "20px", fontFamily: "Arial" }}>
+      <h1>📋 Attendance Tracker</h1>
+
+      <table border="1" cellPadding="10">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Status</th>
+            <th>Mark</th>
+          </tr>
+        </thead>
+        <tbody>
+          {students.map((student) => (
+            <tr key={student.id}>
+              <td>{student.name}</td>
+              <td>
+                {student.present ? "✅ Present" : "❌ Absent"}
+              </td>
+              <td>
+                <button onClick={() => toggleAttendance(student.id)}>
+                  Toggle
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h3 style={{ marginTop: "20px" }}>
+        Total Present: {students.filter(s => s.present).length}
+      </h3>
+    </div>
+  );
+}
+
+export default App;
