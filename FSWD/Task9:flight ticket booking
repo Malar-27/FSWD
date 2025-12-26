@@ -1,0 +1,59 @@
+main.jsx:
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+App.jsx
+function App() {
+  const bookTicket = () => {
+    // Prompt for passenger name
+    const name = prompt("Enter passenger name:");
+    if (!name) {
+      alert("Booking cancelled: Name is required.");
+      return;
+    }
+
+    // Prompt for destination
+    const destination = prompt("Enter destination:");
+    if (!destination) {
+      alert("Booking cancelled: Destination is required.");
+      return;
+    }
+
+    // Prompt for number of tickets
+    const tickets = prompt("Enter number of tickets:");
+    if (!tickets || tickets <= 0) {
+      alert("Invalid number of tickets.");
+      return;
+    }
+
+    // Confirmation dialog
+    const confirmBooking = confirm(
+      `Please confirm your booking:\n\nName: ${name}\nDestination: ${destination}\nTickets: ${tickets}`
+    );
+
+    if (confirmBooking) {
+      alert("✅ Flight ticket booked successfully!");
+    } else {
+      alert("❌ Booking cancelled.");
+    }
+  };
+
+  return (
+    <div style={{ padding: "20px", fontFamily: "Arial" }}>
+      <h1>✈️ Flight Ticket Booking</h1>
+      <p>Click the button below to book your flight.</p>
+
+      <button onClick={bookTicket}>
+        Book Flight Ticket
+      </button>
+    </div>
+  );
+}
+
+export default App;
