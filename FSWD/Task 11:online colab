@@ -1,0 +1,73 @@
+Main.jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+App.jsx
+function App() {
+  const bookCab = () => {
+    // Prompt for customer name
+    const name = prompt("Enter customer name:");
+    if (!name) {
+      alert("Booking cancelled: Name is required.");
+      return;
+    }
+
+    // Prompt for pickup location
+    const pickup = prompt("Enter pickup location:");
+    if (!pickup) {
+      alert("Booking cancelled: Pickup location is required.");
+      return;
+    }
+
+    // Prompt for drop location
+    const drop = prompt("Enter drop location:");
+    if (!drop) {
+      alert("Booking cancelled: Drop location is required.");
+      return;
+    }
+
+    // Prompt for cab type
+    const cabType = prompt("Enter cab type (Mini / Sedan / SUV):");
+    if (!cabType) {
+      alert("Booking cancelled: Cab type is required.");
+      return;
+    }
+
+    // Confirmation dialog
+    const confirmBooking = confirm(
+      `Please confirm your cab booking:\n\n` +
+      `Name: ${name}\n` +
+      `Pickup: ${pickup}\n` +
+      `Drop: ${drop}\n` +
+      `Cab Type: ${cabType}`
+    );
+
+    if (confirmBooking) {
+      alert("✅ Cab booked successfully! Your driver will arrive soon.");
+    } else {
+      alert("❌ Cab booking cancelled.");
+    }
+  };
+
+  return (
+    <div style={{ padding: "20px", fontFamily: "Arial" }}>
+      <h1>🚕 Online Cab Booking</h1>
+      <p>Click the button below to book a cab.</p>
+
+      <button onClick={bookCab}>
+        Book Cab
+      </button>
+    </div>
+  );
+}
+
+export default App;
+
+
