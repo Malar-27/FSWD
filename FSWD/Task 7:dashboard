@@ -1,0 +1,62 @@
+main.jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+App.jsx:
+import { useState } from "react";
+
+function App() {
+  const [task, setTask] = useState("");
+  const [tasks, setTasks] = useState([]);
+
+  const addTask = () => {
+    if (task.trim() === "") return;
+    setTasks([...tasks, task]);
+    setTask("");
+  };
+
+  const removeTask = (index) => {
+    setTasks(tasks.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div style={{ padding: "20px", fontFamily: "Arial" }}>
+      <h1>📝 Task List Dashboard</h1>
+
+      <input
+        type="text"
+        placeholder="Enter a task"
+        value={task}
+        onChange={(e) => setTask(e.target.value)}
+      />
+
+      <button onClick={addTask} style={{ marginLeft: "10px" }}>
+        Add Task
+      </button>
+
+      <ul style={{ marginTop: "20px" }}>
+        {tasks.map((t, index) => (
+          <li key={index} style={{ marginBottom: "10px" }}>
+            {t}
+            <button
+              onClick={() => removeTask(index)}
+              style={{ marginLeft: "10px" }}
+            >
+              ❌ Remove
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      <h3>Total Tasks: {tasks.length}</h3>
+    </div>
+  );
+}
+
+export default App;
