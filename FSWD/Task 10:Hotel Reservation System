@@ -1,0 +1,62 @@
+main.jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+App.jsx
+function App() {
+  const reserveHotel = () => {
+    // Prompt for guest name
+    const guestName = prompt("Enter guest name:");
+    if (!guestName) {
+      alert("Reservation cancelled: Guest name is required.");
+      return;
+    }
+
+    // Prompt for room type
+    const roomType = prompt("Enter room type (Single / Double / Suite):");
+    if (!roomType) {
+      alert("Reservation cancelled: Room type is required.");
+      return;
+    }
+
+    // Prompt for number of nights
+    const nights = prompt("Enter number of nights:");
+    if (!nights || nights <= 0) {
+      alert("Invalid number of nights.");
+      return;
+    }
+
+    // Confirmation dialog
+    const confirmReservation = confirm(
+      `Please confirm your reservation:\n\n` +
+      `Guest Name: ${guestName}\n` +
+      `Room Type: ${roomType}\n` +
+      `Nights: ${nights}`
+    );
+
+    if (confirmReservation) {
+      alert("✅ Hotel reservation confirmed!");
+    } else {
+      alert("❌ Reservation cancelled.");
+    }
+  };
+
+  return (
+    <div style={{ padding: "20px", fontFamily: "Arial" }}>
+      <h1>🏨 Hotel Reservation System</h1>
+      <p>Click the button below to reserve a hotel room.</p>
+
+      <button onClick={reserveHotel}>
+        Reserve Room
+      </button>
+    </div>
+  );
+}
+
+export default App;
