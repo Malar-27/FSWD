@@ -1,0 +1,75 @@
+
+Main.jsx:
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+App.jsx
+import { useState } from "react";
+
+function App() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [eventName, setEventName] = useState("");
+
+  const registerEvent = () => {
+    if (!name || !email || !eventName) {
+      alert("❌ Please fill all the fields.");
+      return;
+    }
+
+    alert(
+      `✅ Registration Successful!\n\n` +
+      `Name: ${name}\n` +
+      `Email: ${email}\n` +
+      `Event: ${eventName}`
+    );
+
+    // Clear form after registration
+    setName("");
+    setEmail("");
+    setEventName("");
+  };
+
+  return (
+    <div style={{ padding: "20px", fontFamily: "Arial" }}>
+      <h1>🎉 Event Registration</h1>
+
+      <input
+        type="text"
+        placeholder="Enter your name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <br /><br />
+
+      <input
+        type="email"
+        placeholder="Enter your email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <br /><br />
+
+      <input
+        type="text"
+        placeholder="Enter event name"
+        value={eventName}
+        onChange={(e) => setEventName(e.target.value)}
+      />
+      <br /><br />
+
+      <button onClick={registerEvent}>
+        Register
+      </button>
+    </div>
+  );
+}
+
+export default App;
+
