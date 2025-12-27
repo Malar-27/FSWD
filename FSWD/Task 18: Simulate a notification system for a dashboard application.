@@ -1,0 +1,122 @@
+
+Main .jsx:
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+App.jsx:
+
+import { useState } from "react";
+
+function App() {
+  const [notifications, setNotifications] = useState([]);
+
+  // Add notification
+  const addNotification = (type) => {
+    const newNotification = {
+      id: Date.now(),
+      message:
+        type === "success"
+          ? "Data saved successfully ✅"
+          : type === "warning"
+          ? "Warning: Check your input ⚠️"
+          : "Error occurred ❌",
+      type
+    };
+
+    setNotifications([newNotification, ...notifications]);
+  };
+
+  // Remove notification
+  const removeNotification = (id) => {
+    setNotifications(notifications.filter((n) => n.id !== id));
+  };
+
+  return (
+    <div style={styles.container}>
+      <h2>Dashboard Notification System</h2>
+
+      {/* Buttons */}
+      <div style={styles.buttons}>
+        <button onClick={() => addNotification("success")}>
+          Success Notification
+        </button>
+        <button onClick={() => addNotification("warning")}>
+          Warning Notification
+        </button>
+        <button onClick={() => addNotification("error")}>
+          Error Notification
+        </button>
+      </div>
+
+      {/* Notification List */}
+      <div style={styles.notificationBox}>
+        {notifications.length === 0 && (
+          <p>No notifications available</p>
+        )}
+
+        {notifications.map((note) => (
+          <div
+            key={note.id}
+            style={{
+              ...styles.notification,
+              backgroundColor:
+                note.type === "success"
+                  ? "#d4edda"
+                  : note.type === "warning"
+                  ? "#fff3cd"
+                  : "#f8d7da"
+            }}
+          >
+            <span>{note.message}</span>
+            <button
+              style={styles.closeBtn}
+              onClick={() => removeNotification(note.id)}
+            >
+              ✖
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Inline styles
+const styles = {
+  container: {
+    maxWidth: "600px",
+    margin: "50px auto",
+    fontFamily: "Arial",
+    textAlign: "center"
+  },
+  buttons: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginBottom: "20px"
+  },
+  notificationBox: {
+    textAlign: "left"
+  },
+  notification: {
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "10px",
+    marginBottom: "10px",
+    borderRadius: "5px"
+  },
+  closeBtn: {
+    background: "transparent",
+    border: "none",
+    cursor: "pointer",
+    fontSize: "16px"
+  }
+};
+
+export default App;
