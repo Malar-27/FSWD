@@ -1,0 +1,117 @@
+Main.jsx:
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+App.jsx:
+import { useState } from "react";
+
+function App() {
+  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState([]);
+
+  const handleAddComment = (e) => {
+    e.preventDefault();
+
+    if (!comment.trim()) {
+      alert("Please enter a comment");
+      return;
+    }
+
+    setComments([...comments, comment]);
+    setComment("");
+  };
+
+  return (
+    <div style={styles.container}>
+      {/* Blog Post */}
+      <div style={styles.blog}>
+        <h1>My Tech Blog</h1>
+        <p style={styles.date}>Posted on: 27 Dec 2025</p>
+
+        <p>
+          React makes it easy to build interactive user interfaces.
+          In this blog, we explore how React handles state updates
+          efficiently and enables real-time UI changes.
+        </p>
+
+        <p>
+          This example demonstrates a responsive blog layout with
+          a real-time comment update system using React hooks.
+        </p>
+      </div>
+
+      {/* Comments Section */}
+      <div style={styles.commentsSection}>
+        <h3>Comments ({comments.length})</h3>
+
+        <form onSubmit={handleAddComment} style={styles.form}>
+          <textarea
+            placeholder="Write a comment..."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            rows="3"
+          />
+          <button type="submit">Post Comment</button>
+        </form>
+
+        {/* Display Comments */}
+        <div style={styles.commentList}>
+          {comments.length === 0 && <p>No comments yet</p>}
+
+          {comments.map((cmt, index) => (
+            <div key={index} style={styles.commentCard}>
+              <p>{cmt}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Inline styles (responsive)
+const styles = {
+  container: {
+    maxWidth: "900px",
+    margin: "30px auto",
+    padding: "15px",
+    fontFamily: "Arial"
+  },
+  blog: {
+    marginBottom: "30px"
+  },
+  date: {
+    color: "gray",
+    fontSize: "14px"
+  },
+  commentsSection: {
+    borderTop: "1px solid #ccc",
+    paddingTop: "20px"
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+    marginBottom: "20px"
+  },
+  commentList: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px"
+  },
+  commentCard: {
+    padding: "10px",
+    backgroundColor: "#f5f5f5",
+    borderRadius: "5px"
+  }
+};
+
+export default App;
