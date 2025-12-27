@@ -1,0 +1,94 @@
+Main.jsx:
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
+);
+
+App.jsx:
+import { Routes, Route, Link } from "react-router-dom";
+
+function App() {
+  return (
+    <div style={styles.container}>
+      <h2>Student Dashboard</h2>
+
+      {/* Navigation */}
+      <nav style={styles.nav}>
+        <Link to="/">Home</Link>
+        <Link to="/students">Students</Link>
+        <Link to="/courses">Courses</Link>
+        <Link to="/profile">Profile</Link>
+      </nav>
+
+      {/* Pages */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/students" element={<Students />} />
+        <Route path="/courses" element={<Courses />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
+    </div>
+  );
+}
+
+/* Pages */
+const Home = () => (
+  <div>
+    <h3>Dashboard Home</h3>
+    <p>Welcome to the student management system.</p>
+  </div>
+);
+
+const Students = () => (
+  <div>
+    <h3>Student List</h3>
+    <ul>
+      <li>Arun – CSE</li>
+      <li>Divya – IT</li>
+      <li>Karthik – ECE</li>
+    </ul>
+  </div>
+);
+
+const Courses = () => (
+  <div>
+    <h3>Courses</h3>
+    <ul>
+      <li>React</li>
+      <li>Data Structures</li>
+      <li>Cloud Computing</li>
+    </ul>
+  </div>
+);
+
+const Profile = () => (
+  <div>
+    <h3>Admin Profile</h3>
+    <p>Name: Admin</p>
+    <p>Email: admin@college.edu</p>
+  </div>
+);
+
+/* Styles */
+const styles = {
+  container: {
+    maxWidth: "900px",
+    margin: "40px auto",
+    fontFamily: "Arial"
+  },
+  nav: {
+    display: "flex",
+    gap: "20px",
+    marginBottom: "20px"
+  }
+};
+
+export default App;
