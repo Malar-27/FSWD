@@ -1,0 +1,136 @@
+Main.jsx:
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+App.jsx:
+import { useState } from "react";
+
+function App() {
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  const [feedbackList, setFeedbackList] = useState([]);
+  const [error, setError] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Validation
+    if (rating === 0) {
+      setError("Please select a rating");
+      return;
+    }
+
+    if (!comment.trim()) {
+      setError("Please enter your comments");
+      return;
+    }
+
+    // Add feedback
+    const newFeedback = {
+      rating,
+      comment
+    };
+
+    setFeedbackList([...feedbackList, newFeedback]);
+    setRating(0);
+    setComment("");
+    setError("");
+  };
+
+  return (
+    <div style={styles.container}>
+      <h2>Student Feedback Form</h2>
+
+      <form onSubmit={handleSubmit} style={styles.form}>
+        {/* Rating */}
+        <div>
+          <p>Rate the Course:</p>
+          {[1, 2, 3, 4, 5].map((num) => (
+            <span
+              key={num}
+              style={{
+                fontSize: "24px",
+                cursor: "pointer",
+                color: num <= rating ? "gold" : "gray"
+              }}
+              onClick={() => setRating(num)}
+            >
+              ★
+            </span>
+          ))}
+        </div>
+
+        {/* Comments */}
+        <textarea
+          placeholder="Enter your feedback"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          rows="4"
+        />
+
+        <button type="submit">Submit Feedback</button>
+
+        {/* Error Message */}
+        {error && <p style={styles.error}>{error}</p>}
+      </form>
+
+      {/* Display Feedback */}
+      <div style={styles.feedbackSection}>
+        <h3>Submitted Feedback</h3>
+
+        {feedbackList.length === 0 && <p>No feedback yet</p>}
+
+        {feedbackList.map((fb, index) => (
+          <div key={index} style={styles.feedbackCard}>
+            <p>
+              <strong>Rating:</strong>{" "}
+              {"★".repeat(fb.rating)}
+            </p>
+            <p>
+              <strong>Comment:</strong> {fb.comment}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Inline styles
+const styles = {
+  container: {
+    maxWidth: "500px",
+    margin: "50px auto",
+    padding: "20px",
+    border: "1px solid #ccc",
+    borderRadius: "8px",
+    fontFamily: "Arial"
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "12px"
+  },
+  error: {
+    color: "red"
+  },
+  feedbackSection: {
+    marginTop: "30px"
+  },
+  feedbackCard: {
+    padding: "10px",
+    marginBottom: "10px",
+    border: "1px solid #ddd",
+    borderRadius: "5px",
+    backgroundColor: "#f9f9f9"
+  }
+};
+
+export default App;
