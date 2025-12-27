@@ -1,0 +1,111 @@
+Main.jsx:
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+App.jsx:
+import { useState } from "react";
+
+function App() {
+  const [activePage, setActivePage] = useState("dashboard");
+
+  const students = [
+    { id: 1, name: "Arun", dept: "CSE", year: "3rd Year" },
+    { id: 2, name: "Divya", dept: "IT", year: "2nd Year" },
+    { id: 3, name: "Karthik", dept: "ECE", year: "4th Year" }
+  ];
+
+  return (
+    <div style={styles.container}>
+      {/* Navigation */}
+      <nav style={styles.nav}>
+        <button onClick={() => setActivePage("dashboard")}>Dashboard</button>
+        <button onClick={() => setActivePage("students")}>Students</button>
+        <button onClick={() => setActivePage("profile")}>Profile</button>
+      </nav>
+
+      {/* Content */}
+      <div style={styles.content}>
+        {activePage === "dashboard" && (
+          <div>
+            <h2>Student Management Dashboard</h2>
+            <p>Total Students: {students.length}</p>
+            <p>Departments: CSE, IT, ECE</p>
+          </div>
+        )}
+
+        {activePage === "students" && (
+          <div>
+            <h2>Student List</h2>
+            <table style={styles.table}>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Department</th>
+                  <th>Year</th>
+                </tr>
+              </thead>
+              <tbody>
+                {students.map((stu) => (
+                  <tr key={stu.id}>
+                    <td>{stu.id}</td>
+                    <td>{stu.name}</td>
+                    <td>{stu.dept}</td>
+                    <td>{stu.year}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {activePage === "profile" && (
+          <div>
+            <h2>Admin Profile</h2>
+            <p><strong>Name:</strong> Admin</p>
+            <p><strong>Role:</strong> Student Manager</p>
+            <p><strong>Email:</strong> admin@college.edu</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Inline styles
+const styles = {
+  container: {
+    maxWidth: "900px",
+    margin: "40px auto",
+    fontFamily: "Arial"
+  },
+  nav: {
+    display: "flex",
+    gap: "15px",
+    marginBottom: "20px"
+  },
+  content: {
+    padding: "20px",
+    border: "1px solid #ccc",
+    borderRadius: "8px"
+  },
+  table: {
+    width: "100%",
+    borderCollapse: "collapse"
+  }
+};
+
+// Table border styling
+styles.table = {
+  ...styles.table,
+  border: "1px solid #ccc"
+};
+
+export default App;
