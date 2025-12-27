@@ -1,0 +1,145 @@
+Main.jsx:
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+App.jsx:
+import { useState } from "react";
+
+function App() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    age: ""
+  });
+
+  const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+
+  // Handle input change
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  // Validation function
+  const validate = () => {
+    let newErrors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Email is invalid";
+    }
+
+    if (!formData.age) {
+      newErrors.age = "Age is required";
+    } else if (formData.age <= 0) {
+      newErrors.age = "Age must be a positive number";
+    }
+
+    return newErrors;
+  };
+
+  // Handle form submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validate();
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
+      setSubmitted(true);
+    }
+  };
+
+  return (
+    <div style={styles.container}>
+      <h2>User Profile Edit</h2>
+
+      <form onSubmit={handleSubmit} style={styles.form}>
+        {/* Name */}
+        <input
+          type="text"
+          name="name"
+          placeholder="Enter name"
+          value={formData.name}
+          onChange={handleChange}
+        />
+        {errors.name && <p style={styles.error}>{errors.name}</p>}
+
+        {/* Email */}
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter email"
+          value={formData.email}
+          onChange={handleChange}
+        />
+        {errors.email && <p style={styles.error}>{errors.email}</p>}
+
+        {/* Age */}
+        <input
+          type="number"
+          name="age"
+          placeholder="Enter age"
+          value={formData.age}
+          onChange={handleChange}
+        />
+        {errors.age && <p style={styles.error}>{errors.age}</p>}
+
+        <button type="submit">Save Profile</button>
+      </form>
+
+      {/* Success Message */}
+      {submitted && (
+        <div style={styles.success}>
+          <h3>Profile Updated Successfully ✅</h3>
+          <p><strong>Name:</strong> {formData.name}</p>
+          <p><strong>Email:</strong> {formData.email}</p>
+          <p><strong>Age:</strong> {formData.age}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Simple inline styles
+const styles = {
+  container: {
+    maxWidth: "400px",
+    margin: "50px auto",
+    padding: "20px",
+    border: "1px solid #ccc",
+    borderRadius: "8px",
+    fontFamily: "Arial"
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px"
+  },
+  error: {
+    color: "red",
+    fontSize: "14px"
+  },
+  success: {
+    marginTop: "20px",
+    padding: "10px",
+    backgroundColor: "#e6ffe6",
+    borderRadius: "5px"
+  }
+};
+
+export default App;
