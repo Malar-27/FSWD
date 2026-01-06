@@ -1,0 +1,88 @@
+MAIN
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+
+APP:
+import React, { useState } from "react";
+import "./App.css";
+
+/* Child Component using Props */
+function StudentDetails(props) {
+  return (
+    <div className="card student">
+      <h2>🎓 Student Profile</h2>
+      <p><b>Name:</b> {props.name}</p>
+      <p><b>Roll No:</b> {props.roll}</p>
+      <p><b>Department:</b> {props.department}</p>
+    </div>
+  );
+}
+
+/* Component using State */
+function Attendance() {
+  const [present, setPresent] = useState(0);
+  const [absent, setAbsent] = useState(0);
+
+  return (
+    <div className="card attendance">
+      <h2>📅 Attendance Tracker</h2>
+      <p className="present">Present Days: {present}</p>
+      <p className="absent">Absent Days: {absent}</p>
+
+      <button className="btn green" onClick={() => setPresent(present + 1)}>
+        Mark Present
+      </button>
+
+      <button className="btn red" onClick={() => setAbsent(absent + 1)}>
+        Mark Absent
+      </button>
+    </div>
+  );
+}
+
+/* Conditional Rendering using State */
+function ResultStatus() {
+  const [isPassed, setIsPassed] = useState(true);
+
+  return (
+    <div className="card result">
+      <h2>📊 Result Status</h2>
+      <p className={isPassed ? "pass" : "fail"}>
+        {isPassed ? "Status: PASS ✅" : "Status: FAIL ❌"}
+      </p>
+
+      <button className="btn blue" onClick={() => setIsPassed(!isPassed)}>
+        Toggle Result
+      </button>
+    </div>
+  );
+}
+
+/* Main Parent Component */
+function App() {
+  return (
+    <div className="container">
+      <h1 className="title">🌈 React.js Concepts Demonstration</h1>
+
+      <StudentDetails
+        name="Dhivya"
+        roll="22CS101"
+        department="Computer Science"
+      />
+
+      <Attendance />
+
+      <ResultStatus />
+    </div>
+  );
+}
+
+export default App;
